@@ -13,6 +13,21 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: zxczxc123
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: zxczxc123
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+
   adminer:
     image: adminer:latest
     container_name: adminer
@@ -20,6 +35,8 @@ services:
       - "8080:8080"
     depends_on:
       - postgres
+      - mysql
 
 volumes:
   postgres_data:
+  mysql_data:
